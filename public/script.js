@@ -19,7 +19,7 @@ socket.on('initialData', ({gameCode, Player, data }) => {
   
   updateGame(Player, data);
   currentPlayer = Player;
-  document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/?invite=${gameCode}`;
+  document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${gameCode}`;
   gameId = gameCode;
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
