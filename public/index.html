@@ -14,36 +14,50 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            background-color: #f1f1f1;
         }
 
         h1 {
             margin-bottom: 20px;
+            color: #2c3e50;
         }
 
         #invite-link-container {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
+            width: 300px;
         }
 
         input {
-            width: 200px;
-            padding: 8px;
-            margin-top: 5px;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+            color: #333;
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
         }
     </style>
 </head>
@@ -53,12 +67,20 @@
     <div id="invite-link-container">
         <p>Invite Link:</p>
         <input type="text" id="invite-link" readonly>
+        <button onclick="copyToClipboard()">Copy Link</button>
     </div>
     <script>
         const socket = io();
         socket.on('initialData', ({gameCode, Player, data }) => {
             document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${gameCode}`;
         });
+
+        function copyToClipboard() {
+            const inviteLink = document.getElementById("invite-link");
+            inviteLink.select();
+            document.execCommand("copy");
+            alert("Link copied to clipboard!");
+        }
     </script>
 </body>
 </html>
