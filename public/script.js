@@ -1,13 +1,26 @@
-const socket = io();
+function getURLParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
+
+const socket = io('http://127.0.0.1:3000', {
+  query: {
+    room: getURLParameter('invite')
+  }
+});
 let playerId = 0;
 let currentPlayer = "";
 let gameEnd = false;
 let gameData = [["", "", ""], ["", "", ""], ["", "", ""]];
 let turn = 0;
 let hasPlayed = false;
-socket.on('initialData', ({ Player, data }) => {
+let gameId = "";
+socket.on('initialData', ({gameCode, Player, data }) => {
+  
   updateGame(Player, data);
   currentPlayer = Player;
+  document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/?invite=${gameCode}`;
+  gameId = gameCode;
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
 socket.on('userList', (users) => {
@@ -46,7 +59,8 @@ function checkGame(block) {
     }
     let data = gameData;
     let Player = currentPlayer;
-    socket.emit('updateBoard', ({ Player, data }));
+    let gameCode = gameId;
+    socket.emit('updateBoard', ({gameCode, Player, data }));
   }
 }
 
