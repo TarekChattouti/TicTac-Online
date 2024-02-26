@@ -3,46 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TicTac</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>TicTacToe Online</title>
     <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
-    
-    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #invite-link-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 200px;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="title">
-            <h1>TicTac Game</h1>
-        </div>        
-    </header>
-    <main>
-        <section class="TicTac-Board">
-            <table class="board">
-                <tr>
-                    <td data-cell="0 0" onclick="checkGame(this)"></td>
-                    <td data-cell="0 1" onclick="checkGame(this)"></td>
-                    <td data-cell="0 2" onclick="checkGame(this)"></td>
-                </tr>
-                <tr>
-                    <td data-cell="1 0" onclick="checkGame(this)"></td>
-                    <td data-cell="1 1" onclick="checkGame(this)"></td>
-                    <td data-cell="1 2" onclick="checkGame(this)"></td>
-                </tr>
-                <tr>
-                    <td data-cell="2 0" onclick="checkGame(this)"></td>
-                    <td data-cell="2 1" onclick="checkGame(this)"></td>
-                    <td data-cell="2 2" onclick="checkGame(this)"></td>
-                </tr>
-            </table>
-        </section>
-    </main>
-    <div class="GUI">
-        <p class="message">Turn: X</p>        
-        <button id="resetBtn" onclick="resetGame()">Reset game</button><br />
+    <h1>TicTacToe Online</h1>
+
+    <div id="invite-link-container">
+        <p>Invite Link:</p>
+        <input type="text" id="invite-link" readonly>
     </div>
-    <footer>
-        <h3>By TC</h3>
-    </footer>
-    <script src="script.js"></script>
+    <script>
+        const socket = io();
+        socket.on('initialData', ({gameCode, Player, data }) => {
+            document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${gameCode}`;
+        });
+    </script>
 </body>
 </html>
