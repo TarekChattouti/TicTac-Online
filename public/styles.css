@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-shadow: 0;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    width: 100%;
+}
+.title {
+    text-align: center;
+    color: #347393;
+    margin: 15px;
+}
+main {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+.board {
+    border-style: solid;
+    width: 100%;
+    height: 100%;
+    border-spacing: 10px;
+}
+.board tr{
+    width: 100%;
+
+}
+.board tr td {
+    cursor: pointer;
+    font-size: 100px;
+    background-color: rgb(84, 70, 70);
+    width: 150px;
+    height: 150px;
+    border-style: solid;
+    border-radius: 15px;
+    text-align: center;
+
+}
+footer {
+    margin: 15px;
+    text-align: center;
+}
+.GUI {
+    
+    margin: 15px;
+    text-align: center;
+}
+#resetBtn {
+    padding: 15px;
+    margin: 15px;
+    color: white;
+    background-color: red;
+}
