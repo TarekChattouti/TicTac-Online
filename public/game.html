@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTac</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
+    
+    
+</head>
+<body>
+    <header>
+        <div class="title">
+            <h1>TicTac Game</h1>
+        </div>        
+    </header>
+    <main>
+        <section class="TicTac-Board">
+            <table class="board">
+                <tr>
+                    <td data-cell="0 0" onclick="checkGame(this)"></td>
+                    <td data-cell="0 1" onclick="checkGame(this)"></td>
+                    <td data-cell="0 2" onclick="checkGame(this)"></td>
+                </tr>
+                <tr>
+                    <td data-cell="1 0" onclick="checkGame(this)"></td>
+                    <td data-cell="1 1" onclick="checkGame(this)"></td>
+                    <td data-cell="1 2" onclick="checkGame(this)"></td>
+                </tr>
+                <tr>
+                    <td data-cell="2 0" onclick="checkGame(this)"></td>
+                    <td data-cell="2 1" onclick="checkGame(this)"></td>
+                    <td data-cell="2 2" onclick="checkGame(this)"></td>
+                </tr>
+            </table>
+        </section>
+    </main>
+    <div class="GUI">
+        <p class="message">Turn: X</p>        
+        <button id="resetBtn" onclick="resetGame()">Reset game</button><br />
+    </div>
+    <div id="invite-link-container">
+        <p>Invite Link:</p>
+        <input type="text" id="invite-link" readonly>
+    </div>
+    <footer>
+        <h3>By TC</h3>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
