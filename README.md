@@ -40,4 +40,41 @@ Tic-Tac-Toe Online is a web-based game that allows you to challenge friends and 
 1. **Clone the repository:**
 
    ```bash
-   git clone [https://github.com/your-username/tic-tac-toe-online.git](https://github.com/your-username/tic-tac-toe-online.git)
+   git clone [https://github.com/TarekChattouti/TicTac-Online.git](https://github.com/TarekChattouti/TicTac-Online.git)
+2. **Change into the project directory:**
+
+   ```bash
+   cd tic-tac-toe-online
+3. **Install dependencies:**
+
+   ```bash
+   npm install
+## Installation
+1. **Start the server:**
+
+   ```bash
+   node server.js
+2. **Open the game in your browser:**
+
+   ```bash
+   http://localhost:3000
+3. **Clone the repository:**
+
+   ```bash
+   Enjoy playing Tic-Tac-Toe online with your friends!
+
+## Technologies
+
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- Socket.io
+
+## Contributing
+
+Contributions are welcome! If you find any bugs or have suggestions for improvement, please open an issue or create a pull request.
+
+## License
+
+This project is licensed under the ![MIT License](LICENSE.md).
