@@ -1,4 +1,7 @@
 # Tic-Tac-Toe Online: Play with Friends in Real-Time!
+## Demo
+
+[Demo playing](https://tiktak-online.azurewebsites.net)
 
 ## Table of Contents
 
