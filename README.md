@@ -40,16 +40,20 @@ Tic-Tac-Toe Online is a web-based game that allows you to challenge friends and 
 1. **Clone the repository:**
 
    ```bash
-   git clone [https://github.com/TarekChattouti/TicTac-Online.git](https://github.com/TarekChattouti/TicTac-Online.git)
+   git clone https://github.com/TarekChattouti/TicTac-Online.git
 2. **Change into the project directory:**
 
    ```bash
-   cd tic-tac-toe-online
+   cd TicTac-Online
 3. **Install dependencies:**
 
    ```bash
    npm install
-## Installation
+4. **Change server:**
+
+Edit Invite Link and corsOptions in server.js , index.html and script.js
+
+## Usage
 1. **Start the server:**
 
    ```bash
