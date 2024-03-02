@@ -5,20 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTac</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
-    
-    
+    <script src="socket.io.min.js"></script>
+
 </head>
 <body>
     <header>
         <div class="title">
-            <h1>TicTac Game</h1>
-        </div>        
+            <h1>TicTac Game</h1>   
+        </div>  
+        <div>
+            <h4 class="name"></h4>
+        </div>
+        
+        <br>
     </header>
     <main>
+        <div id="lockOverlay"></div>
         <section class="TicTac-Board">
-            <table class="board">
+            
+            <table class="board" id="board">
+                
                 <tr>
+                    
                     <td data-cell="0 0" onclick="checkGame(this)"></td>
                     <td data-cell="0 1" onclick="checkGame(this)"></td>
                     <td data-cell="0 2" onclick="checkGame(this)"></td>
@@ -48,5 +56,21 @@
         <h3>By TC</h3>
     </footer>
     <script src="script.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+    const mainElement = document.querySelector('main');
+    const lockOverlay = document.getElementById('lockOverlay');
+
+
+    lockOverlay.style.width = mainElement.clientWidth + 'px';
+    lockOverlay.style.height = mainElement.clientHeight + 'px';
+
+
+    window.addEventListener('resize', () => {
+      lockOverlay.style.width = mainElement.clientWidth + 'px';
+      lockOverlay.style.height = mainElement.clientHeight + 'px';
+    });
+  });
+    </script>
 </body>
 </html>

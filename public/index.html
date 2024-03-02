@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTacToe Online</title>
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
+    <script src="socket.io.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -14,73 +14,119 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f1f1f1;
+            background-color: #f4f4f4;
         }
 
         h1 {
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: #333;
+            text-align: center;
         }
 
         #invite-link-container {
-            background-color: #ecf0f1;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
-            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         input {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid #ddd;
             border-radius: 5px;
             outline: none;
-            font-size: 14px;
-            color: #333;
+            font-size: 16px;
+            box-sizing: border-box;
         }
 
-        button {
-            background-color: #3498db;
+        a {
+            text-decoration: none;
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 15px;
+            padding: 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
-        button:hover {
-            background-color: #2980b9;
+        a:hover {
+            background-color: #45a049;
+        }
+
+        input:hover::before {
+            content: attr(title);
+            position: absolute;
+            background: #333;
+            color: #fff;
+            padding: 8px;
+            border-radius: 5px;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        input[type="button"] {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <h1>TicTacToe Online</h1>
-
     <div id="invite-link-container">
         <p>Invite Link:</p>
-        <input type="text" id="invite-link" onclick="copyToClipboard()" readonly>
-        
+        <input type="text" id="invite-link" onclick="copyToClipboard()" title="This link is Public !" readonly>
+        <br>
+        <a href="public.html">Public Game</a href="public.html"><a href="private.html">Private Game</a href="public.html">
     </div>
     <script>
-        const socket = io();
-        socket.on('initialData', ({gameCode, Player, data }) => {
-            document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${gameCode}`;
-        });
-
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        async function redirect() {
+            sessionStorage.removeItem('hasJoined');
+            await sleep(5000); 
+            window.location.href = sessionStorage.getItem('gameLink');
+        }
+        let hasJoin = sessionStorage.getItem('hasJoined');
+        if (hasJoin) {
+            redirect()
+        }
         function copyToClipboard() {
             const inviteLink = document.getElementById("invite-link");
             inviteLink.select();
             document.execCommand("copy");
-            alert("Link copied to clipboard!");
         }
+        
+
+        const socket = io('http://127.0.0.1:3000', {
+            query: {
+                room: false,
+                url: window.location.pathname,
+                hasJoined: sessionStorage.getItem('hasJoined')
+            }
+        });
+        
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        
+        socket.on('initialData', ({playerData, Player, data }) => {
+            document.getElementById("invite-link").value = `http://127.0.0.1:3000/game.html?invite=${playerData['room']}`;
+            document.querySelector('.name').innerHTML = playerData['name'];
+        });
     </script>
 </body>
 </html>

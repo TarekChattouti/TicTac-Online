@@ -3,7 +3,17 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
+  #lockOverlay {
+    position: absolute;
+    display: block;
+    background-image: url("lock-and-chain.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    pointer-events: none;
+  }
   body {
     font-family: 'Roboto', sans-serif;
     height: 100vh;
@@ -22,12 +32,15 @@
   }
   
   main {
+    max-width: 100%;
+    max-height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
   .board {
+    
     border: 5px solid #ecf0f1;
     border-radius: 10px;
     background-color: #34495e;
@@ -101,4 +114,6 @@
   input:focus {
     border-color: #3498db;
   }
-  
+  .name {
+    text-align: center;
+  }

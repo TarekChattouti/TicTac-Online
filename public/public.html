@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe Online</title>
+    <script src="socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        #public-games {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+        #games-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #games-list th, #games-list td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #games-list th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>TicTacToe Online</h1>
+    <div id="public-games">
+        <article>
+            <h2>Public Games (click to join)</h2>
+            <table id="games-list">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+
+                        <th>Players</th>
+
+                        <th>Join</th>
+
+                    </tr>
+                </thead>
+                <tbody id="games-list-body">
+                    
+                </tbody>
+            </table>
+        </article>
+        
+        <a href="http://127.0.0.1:3000">New Game</a><a>Private Game</a>
+    </div>
+    <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function copyToClipboard() {
+            const inviteLink = document.getElementById("invite-link");
+            inviteLink.select();
+            document.execCommand("copy");
+        }
+        
+
+        const socket = io('http://127.0.0.1:3000', {
+            query: {
+                room: false,
+                url: window.location.pathname,
+            }
+        });
+        
+        
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function addGameRow(gameCode, players, status) {
+            const gamesListBody = document.getElementById('games-list-body');
+            const newRow = document.createElement('tr');
+
+            
+            const gameCodeCell = document.createElement('td');
+            gameCodeCell.textContent = gameCode;
+            newRow.appendChild(gameCodeCell);
+
+            const playersCell = document.createElement('td');
+            playersCell.textContent = players;
+            newRow.appendChild(playersCell);
+
+            const statusCell = document.createElement('td');
+            statusCell.innerHTML = status;
+            newRow.appendChild(statusCell);
+
+            
+            gamesListBody.appendChild(newRow);
+        }
+        socket.on('gameList', ({ currentGames }) => {
+            function addRoom(room){
+                let playerNumber = 0;
+                if (currentGames[room]["players"]["player0"] && currentGames[room]["players"]["player1"]) {
+                    playerNumber = 2;
+
+                } else if (currentGames[room]["players"]["player0"] || currentGames[room]["players"]["player1"]) {
+                    playerNumber = 1;
+                } else {
+                    playerNumber = 0;
+                }
+                let link = `<a href="http://127.0.0.1:3000/game.html?invite=${room}">Join</a>`;
+
+                addGameRow(currentGames[room]["name"], playerNumber, link)
+            }
+            Object.keys(currentGames).forEach(addRoom)
+        });
+    </script>
+</body>
+</html>

@@ -3,11 +3,23 @@ function getURLParameter(name) {
   return urlParams.get(name);
 }
 
-const socket = io('https://tiktak-online.azurewebsites.net', {
+const jsonFilePath = 'Errors.json';
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function redirect(msg,path) {
+  alert(msg);
+  await sleep(1000); 
+  window.location.href = path;
+}
+let hasJoin = sessionStorage.getItem('hasJoined');
+const socket = io('http://127.0.0.1:3000', {
   query: {
-    room: getURLParameter('invite')
+    room: getURLParameter('invite'),
+    url: window.location.pathname
   }
 });
+let isLocked = true;
 let playerId = 0;
 let currentPlayer = "";
 let gameEnd = false;
@@ -15,16 +27,56 @@ let gameData = [["", "", ""], ["", "", ""], ["", "", ""]];
 let turn = 0;
 let hasPlayed = false;
 let gameId = "";
-socket.on('initialData', ({gameCode, Player, data }) => {
-  
+function unlockBoard() {
+  document.getElementById('lockOverlay').style.display = 'none';
+  document.getElementById('board').style.filter = 'blur(0)';
+  document.getElementById('board').style.pointerEvents = 'auto';
+}
+function DisableBoard() {
+  document.getElementById('lockOverlay').style.display = 'block';
+  document.getElementById('board').style.filter = 'blur(5px)';
+  document.getElementById('board').style.pointerEvents = 'auto';
+}
+socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
+  if (error != 0) {
+    fetch(jsonFilePath)
+    .then(response => response.json())
+    .then(data => {
+      sessionStorage.removeItem('hasJoined');
+      redirect(data[`${error}`],"http://127.0.0.1:3000")
+
+    })
+    .catch(error => console.error('Error fetching JSON:', error));
+  }
+
+  if (sessionStorage.getItem('hasJoined') == null && error == 0) {
+    sessionStorage.setItem('hasJoined', 'true');
+    sessionStorage.setItem('gameLink', `http://127.0.0.1:3000/game.html?invite=${playerData["room"]}`);
+  }
+  document.querySelector('.name').innerHTML = gameData['name'];
+
+  console.log(gameData);
+  if ((gameData["players"]["player0"] != null && gameData["players"]["player1"] != null)) {
+    
+    isLocked = false;
+    unlockBoard();
+
+  }
   updateGame(Player, data);
   currentPlayer = Player;
-  document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${gameCode}`;
-  gameId = gameCode;
+  document.getElementById("invite-link").value = `http://127.0.0.1:3000/game.html?invite=${playerData["room"]}`;
+  gameId = playerData["room"];
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
 socket.on('userList', (users) => {
-  console.log('Connected users:', users[0]);
+  
+});
+socket.on('disconnected', (disconnect) => {
+  
+  DisableBoard();
+  isLocked = true;
+  
+  
 });
 socket.on('updateBoard', ({ Player, data }) => {
   
@@ -45,6 +97,10 @@ socket.on('resetGame', () => {
 });
 
 function checkGame(block) {
+  if (isLocked) {
+    document.querySelector('.message').innerHTML = "Wait for another participant !";
+    return;
+  }
   if (!block.textContent && !gameEnd && turn == playerId && turn == 0 && !hasPlayed) {
     hasPlayed = true;
     isReset = false;
