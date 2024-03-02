@@ -13,7 +13,7 @@ async function redirect(msg,path) {
   window.location.href = path;
 }
 let hasJoin = sessionStorage.getItem('hasJoined');
-const socket = io('http://127.0.0.1:3000', {
+const socket = io('https://tiktak-online.azurewebsites.net/', {
   query: {
     room: getURLParameter('invite'),
     url: window.location.pathname
@@ -43,7 +43,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
     .then(response => response.json())
     .then(data => {
       sessionStorage.removeItem('hasJoined');
-      redirect(data[`${error}`],"http://127.0.0.1:3000")
+      redirect(data[`${error}`],"https://tiktak-online.azurewebsites.net/")
 
     })
     .catch(error => console.error('Error fetching JSON:', error));
@@ -51,7 +51,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
 
   if (sessionStorage.getItem('hasJoined') == null && error == 0) {
     sessionStorage.setItem('hasJoined', 'true');
-    sessionStorage.setItem('gameLink', `http://127.0.0.1:3000/game.html?invite=${playerData["room"]}`);
+    sessionStorage.setItem('gameLink', `https://tiktak-online.azurewebsites.net/game.html?invite=${playerData["room"]}`);
   }
   document.querySelector('.name').innerHTML = gameData['name'];
 
@@ -64,7 +64,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
   }
   updateGame(Player, data);
   currentPlayer = Player;
-  document.getElementById("invite-link").value = `http://127.0.0.1:3000/game.html?invite=${playerData["room"]}`;
+  document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${playerData["room"]}`;
   gameId = playerData["room"];
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
