@@ -13,7 +13,7 @@ async function redirect(msg,path) {
   window.location.href = path;
 }
 let hasJoin = sessionStorage.getItem('hasJoined');
-const socket = io('https://tiktak-online.azurewebsites.net/', {
+const socket = io('http://tictac.chattouti.me/', {
   query: {
     room: getURLParameter('invite'),
     url: window.location.pathname
