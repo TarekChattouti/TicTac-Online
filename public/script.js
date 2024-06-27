@@ -51,7 +51,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
 
   if (sessionStorage.getItem('hasJoined') == null && error == 0) {
     sessionStorage.setItem('hasJoined', 'true');
-    sessionStorage.setItem('gameLink', `https://tiktak-online.azurewebsites.net/game.html?invite=${playerData["room"]}`);
+    sessionStorage.setItem('gameLink', `http://tictac.chattouti.me/game.html?invite=${playerData["room"]}`);
   }
   document.querySelector('.name').innerHTML = gameData['name'];
 
