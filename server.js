@@ -64,7 +64,7 @@ function generateInvite() {
 
   const inviteCode = generateUniqueIdentifier(6);
 
-  const inviteLink = `http://tictac.chattouti.me//?invite=${inviteCode}`;
+  const inviteLink = `http://tictac.chattouti.me/?invite=${inviteCode}`;
 
 
   return inviteCode;
@@ -211,9 +211,3 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
-
-
-function checkWin() {
-  // Your existing checkWin logic here...
-}
