@@ -64,7 +64,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
   }
   updateGame(Player, data);
   currentPlayer = Player;
-  document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${playerData["room"]}`;
+  document.getElementById("invite-link").value = `http://tictac.chattouti.me/game.html?invite=${playerData["room"]}`;
   gameId = playerData["room"];
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
