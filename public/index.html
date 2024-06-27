@@ -124,7 +124,7 @@
 
         
         socket.on('initialData', ({playerData, Player, data }) => {
-            document.getElementById("invite-link").value = `https://tiktak-online.azurewebsites.net/game.html?invite=${playerData['room']}`;
+            document.getElementById("invite-link").value = `http://tictac.chattouti.me/game.html?invite=${playerData['room']}`;
             document.querySelector('.name').innerHTML = playerData['name'];
         });
     </script>
