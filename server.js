@@ -8,7 +8,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: 'https://tiktak-online.azurewebsites.net/',  
+  origin: 'http://tictac.chattouti.me/',  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -64,7 +64,7 @@ function generateInvite() {
 
   const inviteCode = generateUniqueIdentifier(6);
 
-  const inviteLink = `https://tiktak-online.azurewebsites.net/?invite=${inviteCode}`;
+  const inviteLink = `http://tictac.chattouti.me//?invite=${inviteCode}`;
 
 
   return inviteCode;
