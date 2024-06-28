@@ -8,7 +8,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: 'http://tictac.chattouti.me/',  
+  origin: window.location.href,  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -64,7 +64,7 @@ function generateInvite() {
 
   const inviteCode = generateUniqueIdentifier(6);
 
-  const inviteLink = `http://tictac.chattouti.me/?invite=${inviteCode}`;
+  const inviteLink = `${window.location.href}/?invite=${inviteCode}`;
 
 
   return inviteCode;
