@@ -13,7 +13,7 @@ async function redirect(msg,path) {
   window.location.href = path;
 }
 let hasJoin = sessionStorage.getItem('hasJoined');
-const socket = io('http://tictac.chattouti.me/', {
+const socket = io(window.location.href, {
   query: {
     room: getURLParameter('invite'),
     url: window.location.pathname
@@ -51,7 +51,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
 
   if (sessionStorage.getItem('hasJoined') == null && error == 0) {
     sessionStorage.setItem('hasJoined', 'true');
-    sessionStorage.setItem('gameLink', `http://tictac.chattouti.me/game.html?invite=${playerData["room"]}`);
+    sessionStorage.setItem('gameLink', `${window.location.href}/game.html?invite=${playerData["room"]}`);
   }
   document.querySelector('.name').innerHTML = gameData['name'];
 
@@ -64,7 +64,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
   }
   updateGame(Player, data);
   currentPlayer = Player;
-  document.getElementById("invite-link").value = `http://tictac.chattouti.me/game.html?invite=${playerData["room"]}`;
+  document.getElementById("invite-link").value = `${window.location.href}/game.html?invite=${playerData["room"]}`;
   gameId = playerData["room"];
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
