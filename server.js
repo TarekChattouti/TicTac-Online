@@ -8,7 +8,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: window.location.href,  
+  origin: '*',  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
@@ -64,7 +64,7 @@ function generateInvite() {
 
   const inviteCode = generateUniqueIdentifier(6);
 
-  const inviteLink = `${window.location.href}/?invite=${inviteCode}`;
+  const inviteLink = `${fullUrl}/?invite=${inviteCode}`;
 
 
   return inviteCode;
@@ -81,7 +81,13 @@ function generateUniqueIdentifier(length) {
 }
 
 
+app.get('*', function (req, res) {    
+    const protocol = req.protocol;
+    const host = req.hostname;
 
+    const fullUrl = `${protocol}://${host}`
+
+})
 
 io.on('connection', (socket) => {
   
