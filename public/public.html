@@ -103,7 +103,7 @@
             </table>
         </article>
         
-        <a href="http://tictac.chattouti.me/">New Game</a><a>Private Game</a>
+        <a href="https://tictac.chattouti.me/">New Game</a><a>Private Game</a>
     </div>
     <script>
         function sleep(ms) {
@@ -117,7 +117,7 @@
         }
         
 
-        const socket = io('tiktak-online.azurewebsites.net/', {
+        const socket = io(window.location.href, {
             query: {
                 room: false,
                 url: window.location.pathname,
@@ -161,7 +161,7 @@
                 } else {
                     playerNumber = 0;
                 }
-                let link = `<a href="http://tictac.chattouti.me/game.html?invite=${room}">Join</a>`;
+                let link = `<a href="${window.location.href}/game.html?invite=${room}">Join</a>`;
 
                 addGameRow(currentGames[room]["name"], playerNumber, link)
             }
