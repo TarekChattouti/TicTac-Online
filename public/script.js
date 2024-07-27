@@ -43,7 +43,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
     .then(response => response.json())
     .then(data => {
       sessionStorage.removeItem('hasJoined');
-      redirect(data[`${error}`],"https://tiktak-online.azurewebsites.net/")
+      redirect(data[`${error}`],"https://tictac.chattouti.me/")
 
     })
     .catch(error => console.error('Error fetching JSON:', error));
@@ -51,7 +51,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
 
   if (sessionStorage.getItem('hasJoined') == null && error == 0) {
     sessionStorage.setItem('hasJoined', 'true');
-    sessionStorage.setItem('gameLink', `${window.location.href}/game.html?invite=${playerData["room"]}`);
+    sessionStorage.setItem('gameLink', `${window.location.href}game.html?invite=${playerData["room"]}`);
   }
   document.querySelector('.name').innerHTML = gameData['name'];
 
@@ -64,7 +64,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
   }
   updateGame(Player, data);
   currentPlayer = Player;
-  document.getElementById("invite-link").value = `${window.location.href}/game.html?invite=${playerData["room"]}`;
+  document.getElementById("invite-link").value = `${window.location.href}game.html?invite=${playerData["room"]}`;
   gameId = playerData["room"];
   document.querySelector('.message').innerHTML = "You play as " + currentPlayer;
 });
