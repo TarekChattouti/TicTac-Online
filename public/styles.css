@@ -1,9 +1,68 @@
-* {
+@media screen and (min-width: 1024px) {
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  #lockOverlay {
+}
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --text-color: #ecf0f1;
+    --background-color: #34495e;
+    --board-color: #2c3e50;
+    --border-color: #ecf0f1;
+    --hover-color: #c0392b;
+    --overlay-opacity: 0.8;
+    --transition-time: 0.3s;
+    --font-title: 'Roboto', sans-serif;
+    --font-body: 'Arial', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+header, footer {
+    width: 100%;
+    max-width: 1024px;
+    margin-bottom: 20px;
+}
+
+header .title h1 {
+    font-family: var(--font-title);
+    font-size: 4em;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.name {
+    font-size: 1.5em;
+    color: var(--text-color);
+    margin-top: -10px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1024px;
+    position: relative;
+    
+}
+
+#lockOverlay {
     position: absolute;
     display: block;
     background-image: url("lock-and-chain.png");
@@ -11,109 +70,359 @@
     background-repeat: no-repeat;
     background-position: center;
     backdrop-filter: blur(5px);
+    opacity: var(--overlay-opacity);
     z-index: 1000;
     pointer-events: none;
-  }
-  body {
-    font-family: 'Roboto', sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to right, #3498db, #2ecc71);
-  }
-  
-  .title {
-    text-align: center;
-    color: #ecf0f1;
-    margin: 15px;
-    font-size: 2.5em;
-  }
-  
-  main {
-    max-width: 100%;
-    max-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .board {
-    
-    border: 5px solid #ecf0f1;
-    border-radius: 10px;
-    background-color: #34495e;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  .board tr {
     width: 100%;
-  }
-  
-  .board tr td {
-    cursor: pointer;
-    font-size: 2em;
-    background-color: #2c3e50;
-    width: 100px;
-    height: 100px;
-    border: 2px solid #ecf0f1;
-    text-align: center;
-    color: #ecf0f1;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .board tr td:hover {
-    background-color: #2c3e50;
-    transform: scale(1.05);
-  }
-  
-  footer {
-    margin: 15px;
-    text-align: center;
-    color: #ecf0f1;
-  }
-  
-  .GUI {
-    margin: 15px;
-    text-align: center;
-  }
-  
-  #resetBtn {
-    padding: 15px;
-    margin: 15px;
-    color: white;
-    background-color: #e74c3c;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  #resetBtn:hover {
-    background-color: #c0392b;
-  }
-  
-  #invite-link-container {
+    height: 100%;
+}
+
+.TicTac-Board {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  input {
-    width: 200px;
-    padding: 8px;
-    margin-top: 5px;
-    border: 2px solid #ecf0f1;
+    max-width: 500px;
+}
+
+.board {
+    border: 5px solid var(--border-color);
+    border-radius: 15px;
+    background-color: var(--background-color);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.board tr {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.board td {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 3em;
+  background-color: var(--board-color);
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--border-color);
+  text-align: center;
+  color: var(--text-color);
+  transition: background-color var(--transition-time), transform var(--transition-time);
+  user-select: none;
+}
+
+.board td:hover {
+    background-color: lighten(var(--board-color), 10%);
+    transform: scale(1.1);
+}
+
+.GUI {
+    text-align: center;
+    margin: 20px;
+}
+
+.message {
+    font-size: 2em;
+    color: var(--text-color);
+}
+
+#resetBtn {
+    padding: 15px 30px;
+    font-size: 1.4em;
+    color: var(--text-color);
+    background-color: var(--hover-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color var(--transition-time);
+    margin-top: 10px;
+}
+
+#resetBtn:hover {
+    background-color: darken(var(--hover-color), 10%);
+}
+
+#invite-link-container {
+    text-align: center;
+    width: 100%;
+
+}
+
+#invite-link-container p {
+    margin-bottom: 5px;
+    font-size: 1.5em;
+}
+
+#invite-link {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid var(--border-color);
     border-radius: 5px;
     outline: none;
-  }
-  
-  input:focus {
-    border-color: #3498db;
-  }
-  .name {
     text-align: center;
-  }
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: border-color var(--transition-time);
+}
+
+#invite-link:focus {
+    border-color: var(--primary-color);
+}
+
+footer h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    color: var(--text-color);
+}
+
+
+@media screen and (min-width: 1024px) {
+    body {
+        font-size: 18px;
+    }
+
+    .title h1 {
+        font-size: 4em;
+    }
+
+    .message {
+        font-size: 2em;
+    }
+
+    #resetBtn {
+      position: fixed;
+      left: 30px;
+
+      bottom: 8px;
+      width: 12rem;
+      max-width: calc(
+        100vw - 8px * 2
+      );
+      margin-inline: auto;
+    }
+
+    #invite-link-container p {
+        font-size: 1.5em;
+    }
+}
+
+}
+@media screen
+    and (max-device-width: 768px) {
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      :root {
+        --primary-color: #3498db;
+        --secondary-color: #2ecc71;
+        --text-color: #ecf0f1;
+        --background-color: #34495e;
+        --board-color: #2c3e50;
+        --border-color: #ecf0f1;
+        --hover-color: #c0392b;
+        --overlay-opacity: 0.8;
+        --transition-time: 0.3s;
+      }
+      
+      body {
+        font-family: 'Roboto', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        color: var(--text-color);
+      }
+      
+      header, footer {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .title {
+        position: relative;
+      }
+      
+      .title h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+      
+      .name {
+        font-size: 1.2em;
+        color: var(--text-color);
+      }
+      
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+        padding: 20px;
+      }
+      
+      #lockOverlay {
+        position: absolute;
+        display: block;
+        background-image: url("lock-and-chain.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        backdrop-filter: blur(5px);
+        opacity: var(--overlay-opacity);
+        z-index: 1000;
+        pointer-events: none;
+      }
+      
+      .TicTac-Board {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 400px;
+        margin: 20px 0;
+      }
+      
+      .board {
+        border: 5px solid var(--border-color);
+        border-radius: 10px;
+        background-color: var(--background-color);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        table-layout: fixed;
+        border-collapse: collapse;
+      }
+      
+      .board tr {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+      
+      .board tr td {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 3em;
+        font-weight: bold;
+        background-color: var(--board-color);
+        width: 100px;
+        height: 100px;
+        border: 2px solid var(--border-color);
+        text-align: center;
+        color: var(--text-color);
+        transition: background-color var(--transition-time), transform var(--transition-time);
+      }
+      
+      .board td:hover {
+        background-color: lighten(var(--board-color), 10%);
+        transform: scale(1.05);
+      }
+      
+      .GUI {
+        text-align: center;
+        margin: 15px;
+      }
+      
+      .message {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+      
+      #resetBtn {
+        padding: 10px 20px;
+        font-size: 1em;
+        color: var(--text-color);
+        background-color: var(--hover-color);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color var(--transition-time);
+      }
+      
+      #resetBtn:hover {
+        background-color: darken(var(--hover-color), 10%);
+      }
+      
+      #invite-link-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      
+      #invite-link-container p {
+        margin-bottom: 5px;
+      }
+      
+      #invite-link {
+        width: 100%;
+        max-width: 300px;
+        padding: 10px;
+        border: 2px solid var(--border-color);
+        border-radius: 5px;
+        outline: none;
+        text-align: center;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        transition: border-color var(--transition-time);
+      }
+      
+      #invite-link:focus {
+        border-color: var(--primary-color);
+      }
+      
+      footer h3 {
+        font-size: 1.2em;
+        margin-top: 20px;
+        color: var(--text-color);
+      }
+      @media screen and (max-width: 400px) {
+        .title h1 {
+            font-size: 1.8em;
+        }
+    
+        .name {
+            font-size: 1em;
+        }
+    
+        .board td {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            
+        }
+    
+        .message {
+            font-size: 1.2em;
+        }
+    
+        #resetBtn {
+            padding: 10px 15px;
+            font-size: 0.9em;
+        }
+    
+        #invite-link-container p {
+            font-size: 1em;
+        }
+    
+        footer h3 {
+            font-size: 1em;
+        }
+    }
+}

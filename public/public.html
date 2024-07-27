@@ -103,24 +103,19 @@
             </table>
         </article>
         
-        <a href="https://tictac.chattouti.me/">New Game</a><a>Private Game</a>
+        <a href="" id="new-game">New Game</a><a>Private Game</a>
     </div>
     <script>
+        document.getElementById("new-game").href = `${document.location.origin}`
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        function copyToClipboard() {
-            const inviteLink = document.getElementById("invite-link");
-            inviteLink.select();
-            document.execCommand("copy");
-        }
-        
-
-        const socket = io(window.location.href, {
+        const socket = io(`${document.location.origin}`, {
             query: {
                 room: false,
                 url: window.location.pathname,
+                hasJoined: sessionStorage.getItem('hasJoined')
             }
         });
         
@@ -161,7 +156,7 @@
                 } else {
                     playerNumber = 0;
                 }
-                let link = `<a href="${window.location.href}/game.html?invite=${room}">Join</a>`;
+                let link = `<a href="${window.location.origin}/game.html?invite=${room}">Join</a>`;
 
                 addGameRow(currentGames[room]["name"], playerNumber, link)
             }

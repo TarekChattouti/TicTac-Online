@@ -1,3 +1,4 @@
+//script.js
 function getURLParameter(name) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(name);
@@ -13,10 +14,11 @@ async function redirect(msg,path) {
   window.location.href = path;
 }
 let hasJoin = sessionStorage.getItem('hasJoined');
-const socket = io(window.location.href, {
+const socket = io(window.location.origin, {
   query: {
     room: getURLParameter('invite'),
-    url: window.location.pathname
+    url: window.location.pathname,
+    hasJoined: sessionStorage.getItem('hasJoined')
   }
 });
 let isLocked = true;
@@ -43,7 +45,7 @@ socket.on('initialData', ({gameData, error , playerData, Player, data }) => {
     .then(response => response.json())
     .then(data => {
       sessionStorage.removeItem('hasJoined');
-      redirect(data[`${error}`],"https://tictac.chattouti.me/")
+      redirect(data[`${error}`],`${document.location.origin}`)
 
     })
     .catch(error => console.error('Error fetching JSON:', error));

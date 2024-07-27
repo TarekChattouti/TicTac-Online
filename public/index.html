@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,7 +110,7 @@
         }
         
 
-        const socket = io('https://tictac.chattouti.me/', {
+        const socket = io(`${document.location.href}`, {
             query: {
                 room: false,
                 url: window.location.pathname,
@@ -125,7 +126,6 @@
         
         socket.on('initialData', ({playerData, Player, data }) => {
             document.getElementById("invite-link").value = `${window.location.href}game.html?invite=${playerData['room']}`;
-            document.querySelector('.name').innerHTML = playerData['name'];
         });
     </script>
 </body>
