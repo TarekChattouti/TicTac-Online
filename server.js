@@ -5,7 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');  
 const app = express();
-
+const fullUrl;
 
 const corsOptions = {
   origin: '*',  
@@ -85,7 +85,7 @@ app.get('*', function (req, res) {
     const protocol = req.protocol;
     const host = req.hostname;
 
-    const fullUrl = `${protocol}://${host}`
+    fullUrl = `${protocol}://${host}`
 
 })
 
