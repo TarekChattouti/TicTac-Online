@@ -5,7 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');  
 const app = express();
-const fullUrl;
+const fullUrl = '';
 
 const corsOptions = {
   origin: '*',  
