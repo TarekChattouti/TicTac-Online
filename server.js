@@ -84,8 +84,10 @@ function generateUniqueIdentifier(length) {
 app.get('*', function (req, res) {    
     const protocol = req.protocol;
     const host = req.hostname;
-
-    fullUrl = `${protocol}://${host}`
+    if (fullUrl == '') {
+      fullUrl = `${protocol}://${host}`
+    }
+    
 
 })
 
