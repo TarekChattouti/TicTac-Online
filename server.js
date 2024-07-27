@@ -1,3 +1,4 @@
+//server.js
 const { Socket } = require('engine.io');
 const express = require('express');
 const WebSocket = require('ws');
@@ -5,7 +6,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');  
 const app = express();
-let fullUrl = '';
+
 
 const corsOptions = {
   origin: '*',  
@@ -40,20 +41,7 @@ app.use(express.static('public'));
 
 let currentGames = {}
 
-let playerData = {
-  id : "",
-  name : "",
-  room : ""
-}
-let roomData = {
-  players : {
-    player0 : null,
-    player1 : null
-  },
-  isPrivate : false,
-  privatePassword : null,
-  isStarted : false
-}
+
 const players = {};
 let Player = 'X';
 let data = [['', '', ''], ['', '', ''], ['', '', '']];
@@ -63,9 +51,6 @@ let gameEnd = false;
 function generateInvite() {
 
   const inviteCode = generateUniqueIdentifier(6);
-
-  const inviteLink = `${fullUrl}/?invite=${inviteCode}`;
-
 
   return inviteCode;
   
@@ -81,19 +66,11 @@ function generateUniqueIdentifier(length) {
 }
 
 
-app.get('*', function (req, res) {    
-    const protocol = req.protocol;
-    const host = req.hostname;
-    if (fullUrl == '') {
-      fullUrl = `${protocol}://${host}`
-    }
-    
-
-})
 
 io.on('connection', (socket) => {
   
   const { room , url , hasJoined} = socket.handshake.query;
+  console.log(url);
   if (url == "/public.html") {
     io.emit('gameList', { currentGames });
     return;
