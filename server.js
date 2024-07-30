@@ -163,7 +163,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    
+    await new Promise(resolve => setTimeout(resolve, 3000));
     let disconnect = true;
     socketId = socket.id;
     if (players[socketId]["room"] != null){
