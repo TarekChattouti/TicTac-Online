@@ -88,7 +88,7 @@
         <p>Invite Link:</p>
         <input type="text" id="invite-link" onclick="copyToClipboard()" title="This link is Public !" readonly>
         <br>
-        <a href="public.html">Public Game</a href="public.html"><a href="private.html">Private Game</a href="public.html">
+        <a href="#" id="start-game">Public Game</a><a href="public.html">Public Game</a><a href="private.html">Private Game</a>
     </div>
     <script>
         function sleep(ms) {
@@ -126,6 +126,7 @@
         
         socket.on('initialData', ({playerData, Player, data }) => {
             document.getElementById("invite-link").value = `${window.location.href}game.html?invite=${playerData['room']}`;
+            document.getElementById("start-game").href = `${window.location.href}game.html?invite=${playerData['room']}`;
         });
     </script>
 </body>
