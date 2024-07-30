@@ -8,6 +8,8 @@ const cors = require('cors');
 const app = express();
 
 
+
+
 const corsOptions = {
   origin: '*',  
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -34,7 +36,7 @@ function generateGuestName() {
 app.use(cors(corsOptions));
 
 const server = http.createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {'pingTimeout': 7000, 'pingInterval': 3000});
 
 app.use(express.static('public'));
 
