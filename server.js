@@ -91,7 +91,8 @@ io.on('connection', (socket) => {
     },
     isPrivate : false,
     privatePassword : null,
-    isStarted : false
+    isStarted : false,
+    haveJoin : false
   }
   let error = 0;
   
@@ -111,9 +112,10 @@ io.on('connection', (socket) => {
         
         gameCode = room;
         isInvited = true;
-
+        currentGames[gameCode]['haveJoin'] = true;
         gameFound = true;
         if (currentGames[gameCode]['players']['player0'] == null) {
+          
           currentGames[gameCode]['players']['player0'] = socketId;
           
         } else {
@@ -163,11 +165,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    
     let disconnect = true;
     socketId = socket.id;
     if (players[socketId]["room"] != null){
-      if (currentGames[players[socketId]["room"]]["players"]["player0"] == null && currentGames[players[socketId]["room"]]["players"]["player1"] == null) {
+      if (currentGames[players[socketId]["room"]]["players"]["player0"] == null && currentGames[players[socketId]["room"]]["players"]["player1"] == null && currentGames[gameCode]['haveJoin'] == true) {
         delete currentGames[players[socketId]["room"]];
       }else {
         if (currentGames[players[socketId]["room"]]["players"]["player0"] == socketId) {
