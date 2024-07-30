@@ -185,13 +185,21 @@ io.on('connection', (socket) => {
       
     }
 
-    
+    deleteEmptyGames();
     delete players[socketId];
     
     console.log('A user disconnected',socketId);
   });
 });
-
+function deleteEmptyGames() {
+  for (const [gameCode, gameData] of Object.entries(currentGames)) {
+    const { players } = gameData;
+    if (players.player0 === null && players.player1 === null && gameData.haveJoin) {
+      delete currentGames[gameCode];
+      console.log(`Deleted empty game with code: ${gameCode}`);
+    }
+  }
+}
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
